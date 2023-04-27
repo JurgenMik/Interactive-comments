@@ -1,0 +1,53 @@
+@import '../../variables/variables.scss';
+
+.main-comment-container {
+  width: 75%;
+  height: 10vh;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.avatar-container {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  img {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  margin-right: 1rem;
+}
+
+.comment-container {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  button {
+    width: 6rem;
+    height: 2.5rem;
+    margin-left: 0.5rem;
+    border-radius: 0.40rem;
+    border: 0;
+    background: $ModerateBlue;
+    color: white;
+    font-weight: bold;
+    &:hover {
+      background: $LightGrayishBlue;
+      cursor: pointer;
+    }
+  }
+  textarea {
+    width: 70%;
+    border: 1px solid $LightGray;
+    border-radius: 0.35rem;
+    padding: 0.75rem;
+    font-size: 0.90rem;
+    font-family: Rubik;
+    &:focus {
+      outline: none;
+      border: 1px solid $ModerateBlue;
+    }
+  }
+}
