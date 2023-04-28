@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import './App.scss';
 import UserComment from "./components/UserComment/UserComment";
+import Comments from "./components/Comments/Comments";
 import data from './data.json';
 import {Comment} from "./interfaces";
 
 function App() {
 
-    const [comments, setComments] = useState<any>([]);
+    const [comments, setComments] = useState<Comment[]>([]);
     const [comment, setComment] = useState<Comment>({
         content: "",
         createdAt: "",
@@ -27,6 +28,10 @@ function App() {
 
   return (
       <div className="main-layout-container">
+          <Comments
+              comments={comments}
+              profile={data.currentUser}
+          />
           <UserComment
               setComment={setComment}
               setComments={setComments}

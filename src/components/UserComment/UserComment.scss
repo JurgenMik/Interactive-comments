@@ -1,11 +1,12 @@
 @import '../../variables/variables.scss';
 
 .main-comment-container {
-  width: 75%;
+  width: 85%;
   height: 10vh;
   display: flex;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 0.5rem;
 }
 
 .avatar-container {
