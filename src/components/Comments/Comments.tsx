@@ -7,10 +7,45 @@ import {MdEdit} from 'react-icons/md';
 
 interface Props {
     profile: {image: object, username: string},
-    comments: Comment[]
+    comments: Comment[],
+    setComments: (comment: Comment[]) => void
 }
 
-function Comments({profile, comments}: Props) {
+function Comments({profile, comments, setComments}: Props) {
+
+    const handleCommentScoreChange = (targetComment: string, actionType: string) => {
+        const updatedComment = comments.map(comment => {
+            if (comment.content === targetComment) {
+                return {...comment,
+                    score: actionType === 'increment' ? ++comment.score : --comment.score
+                };
+            } else {
+                return comment;
+            }
+        });
+        setComments(updatedComment);
+    }
+
+    const handleReplyScoreChange = (targetComment: string, targetReply: string, actionType: string) => {
+        const updatedComments = comments.map(comment => {
+            if (comment.content === targetComment) {
+                const updatedReplies = comment?.replies.map((reply: any) => {
+                    if (reply.content === targetReply) {
+                        return {...reply,
+                            score: actionType === 'increment' ? ++reply.score : --reply.score
+                        };
+                    } else {
+                        return reply;
+                    }
+                });
+                return {...comment, replies: updatedReplies};
+            } else {
+                return comment;
+            }
+        });
+        setComments(updatedComments);
+    }
+
     return (
         <div className="main-comments-container">
             {comments?.map((comment: Comment) => {
@@ -20,12 +55,14 @@ function Comments({profile, comments}: Props) {
                             <div className="score">
                                 <BiPlus
                                     id="edit-score"
+                                    onClick={e => handleCommentScoreChange(comment.content, 'increment')}
                                 />
                                 <span>
                                     {comment.score}
                                 </span>
                                 <BiMinus
                                     id="edit-score"
+                                    onClick={e => handleCommentScoreChange(comment.content, 'decrement')}
                                 />
                             </div>
                             <div className="meta-details">
@@ -71,12 +108,14 @@ function Comments({profile, comments}: Props) {
                                         <div className="score">
                                             <BiPlus
                                                 id="edit-score"
+                                                onClick={e => handleReplyScoreChange(comment.content, reply.content, 'increment')}
                                             />
                                             <span>
                                                 {reply.score}
                                             </span>
                                             <BiMinus
                                                 id="edit-score"
+                                                onClick={e => handleReplyScoreChange(comment.content, reply.content, 'decrement')}
                                             />
                                         </div>
                                         <div className="meta-details">

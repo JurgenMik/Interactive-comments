@@ -31,6 +31,7 @@ function App() {
           <Comments
               comments={comments}
               profile={data.currentUser}
+              setComments={setComments}
           />
           <UserComment
               setComment={setComment}
