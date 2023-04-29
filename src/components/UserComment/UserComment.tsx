@@ -20,13 +20,8 @@ function UserComment({setComment, comment, comments, setComments}: Props) {
     }
 
     const handleCommentSubmit = () => {
-        let date = new Date();
-
-        setComment({...comment,
-            createdAt: date.toLocaleDateString('en-GB')
-        });
-
         setComments([...comments, comment]);
+
         textAreaRef.current.value = '';
     }
 
