@@ -10,7 +10,7 @@ function App() {
     const [comments, setComments] = useState<Comment[]>([]);
     const [comment, setComment] = useState<Comment>({
         content: "",
-        createdAt: "",
+        createdAt: new Date().toLocaleDateString('en-GB'),
         score: 0,
         user: {
             image: {
