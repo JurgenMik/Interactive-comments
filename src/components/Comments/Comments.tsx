@@ -8,10 +8,11 @@ import {MdEdit} from 'react-icons/md';
 interface Props {
     profile: {image: object, username: string},
     comments: Comment[],
-    setComments: (comment: Comment[]) => void
+    setComments: (comment: Comment[]) => void,
+    handleSelectedComment: (content: string, identifier: string, targetComment: string | null) => void
 }
 
-function Comments({profile, comments, setComments}: Props) {
+function Comments({profile, comments, setComments, handleSelectedComment}: Props) {
 
     const handleCommentScoreChange = (targetComment: string, actionType: string) => {
         const updatedComment = comments.map(comment => {
@@ -80,7 +81,10 @@ function Comments({profile, comments, setComments}: Props) {
                                     <p>{comment.createdAt}</p>
                                     {comment?.user?.username === profile?.username ?
                                         <div className="action">
-                                            <span id="action-delete">
+                                            <span
+                                                id="action-delete"
+                                                onClick={e => handleSelectedComment(comment.content, 'comment', null)}
+                                            >
                                                 <FaTrash />
                                                 <p>Delete</p>
                                             </span>
@@ -133,7 +137,10 @@ function Comments({profile, comments, setComments}: Props) {
                                                 <p>{reply.createdAt}</p>
                                                 {reply?.user?.username === profile?.username ?
                                                     <div className="action">
-                                                        <span id="action-delete">
+                                                        <span
+                                                            id="action-delete"
+                                                            onClick={e => handleSelectedComment(reply.content, 'reply', comment.content)}
+                                                        >
                                                             <FaTrash />
                                                             <p>Delete</p>
                                                         </span>
