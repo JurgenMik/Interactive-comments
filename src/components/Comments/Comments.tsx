@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Comments.scss';
+import UserReply from '../UserReply/UserReply';
 import {Comment} from "../../interfaces";
 import {BiPlus, BiMinus} from 'react-icons/bi';
 import {FaReply, FaTrash} from 'react-icons/fa';
@@ -13,6 +14,12 @@ interface Props {
 }
 
 function Comments({profile, comments, setComments, handleSelectedComment}: Props) {
+
+    const [replyTo, setReplyTo] = useState({
+        targetComment: '',
+        replyingTo: '',
+        identifier: ''
+    });
 
     const handleCommentScoreChange = (targetComment: string, actionType: string) => {
         const updatedComment = comments.map(comment => {
@@ -45,6 +52,13 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
             }
         });
         setComments(updatedComments);
+    }
+
+    const handleReplyPopUp = (targetComment: string, replyingTo: string, identifier: string) => {
+        setReplyTo({...replyTo, targetComment: targetComment,
+            replyingTo: replyingTo,
+            identifier: identifier
+        });
     }
 
     return (
@@ -94,7 +108,12 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                             </span>
                                         </div>
                                         :
-                                        <div className="action">
+                                        <div
+                                            className="action"
+                                            onClick={e =>
+                                                handleReplyPopUp(comment.content, comment.user.username, 'comment')
+                                            }
+                                        >
                                             <FaReply />
                                             <p>Reply</p>
                                         </div>
@@ -105,9 +124,19 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                 </div>
                             </div>
                         </div>
+                        {replyTo.replyingTo === comment.user.username &&
+                            <UserReply
+                                profile={profile}
+                                replyTo={replyTo}
+                                comments={comments}
+                                setComments={setComments}
+                                setReplyTo={setReplyTo}
+                            />
+                        }
                         <div className="main-reply-container">
                             {comment?.replies?.map((reply: any) => {
                                 return (
+                                    <>
                                     <div className="sub-reply-container" key={reply.content}>
                                         <div className="score">
                                             <BiPlus
@@ -150,7 +179,12 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                                         </span>
                                                     </div>
                                                     :
-                                                    <div className="action">
+                                                    <div
+                                                        className="action"
+                                                        onClick={ e =>
+                                                            handleReplyPopUp(comment.content, reply.user.username, 'reply')
+                                                        }
+                                                    >
                                                         <FaReply />
                                                         <p>Reply</p>
                                                     </div>
@@ -164,6 +198,16 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                             </div>
                                         </div>
                                     </div>
+                                    {replyTo.replyingTo && replyTo.replyingTo === reply.user.username &&
+                                        <UserReply
+                                            profile={profile}
+                                            replyTo={replyTo}
+                                            comments={comments}
+                                            setComments={setComments}
+                                            setReplyTo={setReplyTo}
+                                        />
+                                    }
+                                    </>
                                 )
                             })}
                         </div>
