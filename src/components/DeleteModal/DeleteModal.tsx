@@ -30,7 +30,6 @@ function DeleteModal({setViewModal, selected, setComments, comments}: Props) {
                 });
 
                 setComments(updatedReplies);
-                setViewModal(null);
                 break;
             case 'comment':
                 const updatedComments = comments.filter((comment: Comment) =>
@@ -38,9 +37,9 @@ function DeleteModal({setViewModal, selected, setComments, comments}: Props) {
                 );
 
                 setComments(updatedComments);
-                setViewModal(null);
                 break;
         }
+        setViewModal(null);
     }
 
     return (
