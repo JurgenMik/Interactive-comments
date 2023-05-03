@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Comments.scss';
 import UserReply from '../UserReply/UserReply';
 import {Comment} from "../../interfaces";
@@ -15,11 +15,22 @@ interface Props {
 
 function Comments({profile, comments, setComments, handleSelectedComment}: Props) {
 
+    const [isEditing, setIsEditing] = useState({
+        selected: false,
+        target: '',
+        repliedTo_content: '',
+        identifier: ''
+    });
     const [replyTo, setReplyTo] = useState({
         targetComment: '',
         replyingTo: '',
         identifier: ''
     });
+    const [edited, setEditedContent] = useState(isEditing.target);
+
+    useEffect(() => {
+        setEditedContent(isEditing.target);
+    }, [isEditing.target]);
 
     const handleCommentScoreChange = (targetComment: string, actionType: string) => {
         const updatedComment = comments.map(comment => {
@@ -59,6 +70,54 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
             replyingTo: replyingTo,
             identifier: identifier
         });
+    }
+
+    const handleIsEditingUserInteraction = (targetComment: string, identifier: string, repliedTo: string) => {
+        setIsEditing({...isEditing,
+            selected: !isEditing.selected,
+            target: targetComment,
+            repliedTo_content: repliedTo,
+            identifier: identifier
+        });
+    }
+
+    const handleInteractionEditChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setEditedContent(e.target.value);
+    }
+
+    const handleInteractionEditSubmit = () => {
+        switch (isEditing.identifier) {
+            case 'reply': {
+                const updatedComments = comments.map(comment => {
+                    if (comment.content === isEditing.repliedTo_content) {
+                        const updatedReplies = comment.replies.map((reply: any) => {
+                            if (reply.content === isEditing.target) {
+                                return {...reply, content: edited}
+                            } else {
+                                return reply;
+                            }
+                        });
+                        return {...comment, replies: updatedReplies}
+                    } else {
+                        return comment;
+                    }
+                });
+                setComments(updatedComments);
+                break;
+            }
+            case 'comment': {
+                const updatedComments = comments.map(comment => {
+                    if (comment.content === isEditing.target) {
+                        return {...comment, content: edited}
+                    } else {
+                        return comment;
+                    }
+                });
+                setComments(updatedComments);
+                break;
+            }
+        }
+        setIsEditing({...isEditing, selected: false, target: ""});
     }
 
     return (
@@ -102,7 +161,10 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                                 <FaTrash />
                                                 <p>Delete</p>
                                             </span>
-                                            <span id="action-edit">
+                                            <span
+                                                id="action-edit"
+                                                onClick={e => handleIsEditingUserInteraction(comment.content, 'comment', "")}
+                                            >
                                                 <MdEdit />
                                                 <p>Edit</p>
                                             </span>
@@ -120,7 +182,20 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                     }
                                 </div>
                                 <div className="content">
-                                    <p>{comment.content}</p>
+                                    {isEditing.selected && isEditing.target === comment.content ?
+                                        <div className="edit-interaction-container">
+                                            <textarea
+                                                name="edit"
+                                                value={edited}
+                                                onChange={handleInteractionEditChange}
+                                            />
+                                            <button onClick={handleInteractionEditSubmit}>
+                                                UPDATE
+                                            </button>
+                                        </div>
+                                        :
+                                        <p>{comment.content}</p>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -173,7 +248,10 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                                             <FaTrash />
                                                             <p>Delete</p>
                                                         </span>
-                                                        <span id="action-edit">
+                                                        <span
+                                                            id="action-edit"
+                                                            onClick={e => handleIsEditingUserInteraction(reply.content, 'reply', comment.content)}
+                                                        >
                                                             <MdEdit />
                                                             <p>Edit</p>
                                                         </span>
@@ -191,10 +269,23 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                                 }
                                             </div>
                                             <div className="content">
-                                                <p>
-                                                    <span>@{reply.replyingTo} </span>
-                                                    <>{reply.content}</>
-                                                </p>
+                                                {isEditing.selected && isEditing.target === reply.content ?
+                                                    <div className="edit-interaction-container">
+                                                        <textarea
+                                                            name="edit"
+                                                            value={edited}
+                                                            onChange={handleInteractionEditChange}
+                                                        />
+                                                        <button onClick={handleInteractionEditSubmit}>
+                                                            UPDATE
+                                                        </button>
+                                                    </div>
+                                                    :
+                                                    <p>
+                                                        <span>@{reply.replyingTo} </span>
+                                                        <>{reply.content}</>
+                                                    </p>
+                                                }
                                             </div>
                                         </div>
                                     </div>

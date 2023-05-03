@@ -124,5 +124,39 @@
       color: $ModerateBlue;
       font-weight: bold;
     }
+    .edit-interaction-container {
+      display: flex;
+      flex-direction: column;
+      textarea {
+        margin-top: 1rem;
+        width: 97.5%;
+        font-size: 1rem;
+        font-family: Rubik;
+        padding: 0.5rem;
+        height: 5rem;
+        border: 1px solid $LightGray;
+        border-radius: 0.35rem;
+        &:focus {
+          outline: none;
+          border: 1px solid $ModerateBlue;
+        }
+      }
+      button {
+        width: 6rem;
+        height: 2.5rem;
+        margin-top: 1rem;
+        margin-left: auto;
+        float: right;
+        border-radius: 0.40rem;
+        border: 0;
+        background: $ModerateBlue;
+        color: white;
+        font-weight: bold;
+        &:hover {
+          background: $LightGrayishBlue;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
