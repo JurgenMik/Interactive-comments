@@ -1,15 +1,28 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import './UserComment.scss';
 import {Comment} from "../../interfaces";
 
 interface Props {
-    setComment: (comment: Comment) => void,
     setComments: (comments: Comment[]) => void,
-    comment: Comment,
-    comments: Comment[]
+    comments: Comment[],
+    profile: {image: any, username: string},
 }
 
-function UserComment({setComment, comment, comments, setComments}: Props) {
+function UserComment({comments, setComments, profile}: Props) {
+
+    const [comment, setComment] = useState<Comment>({
+        content: "",
+        createdAt: new Date().toLocaleDateString('en-GB'),
+        score: 0,
+        user: {
+            image: {
+                png: profile.image.png,
+                webp: profile.image.webp
+            },
+            username: profile.username
+        },
+        replies: []
+    });
 
     const textAreaRef = useRef<any>(null);
 

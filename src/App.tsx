@@ -9,19 +9,6 @@ import {Comment} from "./interfaces";
 function App() {
 
     const [comments, setComments] = useState<Comment[]>([]);
-    const [comment, setComment] = useState<Comment>({
-        content: "",
-        createdAt: new Date().toLocaleDateString('en-GB'),
-        score: 0,
-        user: {
-            image: {
-                png: data.currentUser.image.png,
-                webp: data.currentUser.image.webp
-            },
-            username: data.currentUser.username,
-        },
-        replies: []
-    });
     const [selected, setSelected] = useState<object | null>(null);
 
     useEffect(() => {
@@ -53,9 +40,8 @@ function App() {
               handleSelectedComment={handleSelectedComment}
           />
           <UserComment
-              setComment={setComment}
               setComments={setComments}
-              comment={comment}
+              profile={data.currentUser}
               comments={comments}
           />
       </div>
