@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Comment} from "../../interfaces";
+import {handleReplySubmit} from "../../utils/interactionUtils";
 
 interface Props {
     profile: {image: any, username: string},
@@ -29,17 +30,9 @@ function UserReply({profile, replyTo, comments, setComments, setReplyTo}: Props)
         setReply({...reply, content: e.target.value});
     }
 
-    const handleReplySubmit = () => {
-        const updatedComment = comments.map(comment => {
-            if (comment.content === replyTo.targetComment) {
-                return {...comment,
-                    replies: [...comment.replies, reply]
-                };
-            } else {
-                return comment;
-            }
-        });
-        setComments(updatedComment);
+    const handleReplySubmitWrapper = () => {
+        handleReplySubmit(setComments, comments, replyTo, reply);
+
         setReplyTo({...replyTo, replyingTo: ""});
     }
 
@@ -61,7 +54,7 @@ function UserReply({profile, replyTo, comments, setComments, setReplyTo}: Props)
                     placeholder={`@${replyTo.replyingTo}, `}
                     onChange={handleReplyChange}
                 />
-                <button onClick={handleReplySubmit}>
+                <button onClick={handleReplySubmitWrapper}>
                     REPLY
                 </button>
             </div>

@@ -71,3 +71,18 @@ export const handleDeleteUserInteraction = (setComments: any, comments: any, sel
             return updatedComments;
     }
 }
+
+export const handleReplySubmit = (setComments: any, comments: any, replyTo: any, reply: any) => {
+    const updatedComment = comments.map((comment: any) => {
+        if (comment.content === replyTo.targetComment) {
+            return {...comment,
+                replies: [...comment.replies, reply]
+            };
+        } else {
+            return comment;
+        }
+    });
+    setComments(updatedComment);
+
+    return updatedComment;
+}

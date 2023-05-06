@@ -30,3 +30,9 @@ export const comment =  {
         { id: 2, content: 'Reply 6', score: 0 }
     ]
 }
+
+export const reply = {
+    id: 3,
+    content: 'Reply 3',
+    score: 4,
+}
