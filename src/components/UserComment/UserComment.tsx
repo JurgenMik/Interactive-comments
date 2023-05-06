@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import './UserComment.scss';
 import {Comment} from "../../interfaces";
+import {handleCommentSubmit} from "../../utils/interactionUtils";
 
 interface Props {
     setComments: (comments: Comment[]) => void,
@@ -32,8 +33,8 @@ function UserComment({comments, setComments, profile}: Props) {
         });
     }
 
-    const handleCommentSubmit = () => {
-        setComments([...comments, comment]);
+    const handleCommentSubmitWrapper = () => {
+        handleCommentSubmit(setComments, comments, comment);
 
         textAreaRef.current.value = '';
     }
@@ -53,7 +54,7 @@ function UserComment({comments, setComments, profile}: Props) {
                     ref={textAreaRef}
                     onChange={handleCommentChange}
                 />
-                <button onClick={handleCommentSubmit}>
+                <button onClick={handleCommentSubmitWrapper}>
                     SEND
                 </button>
             </div>

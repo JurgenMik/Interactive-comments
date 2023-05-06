@@ -34,3 +34,10 @@ export const handleReplyScoreChange = (setComments: any, comments: any, targetCo
 
     return updatedInteraction;
 }
+
+export const handleCommentSubmit = (setComments: any, comments: any, comment: any) => {
+    const updatedComments = [...comments, comment];
+    setComments(updatedComments);
+
+    return updatedComments;
+}

@@ -20,3 +20,13 @@ export const comments = [
         ]
     }
 ];
+
+export const comment =  {
+    id: 3,
+    content: 'Comment 3',
+    score: 4,
+    replies: [
+        { id: 1, content: 'Reply 5', score: 0 },
+        { id: 2, content: 'Reply 6', score: 0 }
+    ]
+}
