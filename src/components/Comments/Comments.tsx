@@ -5,6 +5,7 @@ import {Comment} from "../../interfaces";
 import {BiPlus, BiMinus} from 'react-icons/bi';
 import {FaReply, FaTrash} from 'react-icons/fa';
 import {MdEdit} from 'react-icons/md';
+import {handleCommentScoreChange, handleReplyScoreChange} from "../../utils/interactionUtils";
 
 interface Props {
     profile: {image: object, username: string},
@@ -32,37 +33,12 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
         setEditedContent(isEditing.target);
     }, [isEditing.target]);
 
-    const handleCommentScoreChange = (targetComment: string, actionType: string) => {
-        const updatedComment = comments.map(comment => {
-            if (comment.content === targetComment) {
-                return {...comment,
-                    score: actionType === 'increment' ? ++comment.score : --comment.score
-                };
-            } else {
-                return comment;
-            }
-        });
-        setComments(updatedComment);
+    const handleCommentScoreChangeWrapper = (targetComment: string, actionType: string) => {
+        handleCommentScoreChange(setComments, comments, targetComment, actionType);
     }
 
-    const handleReplyScoreChange = (targetComment: string, targetReply: string, actionType: string) => {
-        const updatedComments = comments.map(comment => {
-            if (comment.content === targetComment) {
-                const updatedReplies = comment?.replies.map((reply: any) => {
-                    if (reply.content === targetReply) {
-                        return {...reply,
-                            score: actionType === 'increment' ? ++reply.score : --reply.score
-                        };
-                    } else {
-                        return reply;
-                    }
-                });
-                return {...comment, replies: updatedReplies};
-            } else {
-                return comment;
-            }
-        });
-        setComments(updatedComments);
+    const handleReplyScoreChangeWrapper = (targetComment: string, targetReply: string, actionType: string) => {
+        handleReplyScoreChange(setComments, comments, targetComment, targetReply, actionType);
     }
 
     const handleReplyPopUp = (targetComment: string, replyingTo: string, identifier: string) => {
@@ -129,14 +105,14 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                             <div className="score">
                                 <BiPlus
                                     id="edit-score"
-                                    onClick={e => handleCommentScoreChange(comment.content, 'increment')}
+                                    onClick={e => handleCommentScoreChangeWrapper(comment.content, 'increment')}
                                 />
                                 <span>
                                     {comment.score}
                                 </span>
                                 <BiMinus
                                     id="edit-score"
-                                    onClick={e => handleCommentScoreChange(comment.content, 'decrement')}
+                                    onClick={e => handleCommentScoreChangeWrapper(comment.content, 'decrement')}
                                 />
                             </div>
                             <div className="meta-details">
@@ -216,14 +192,14 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                         <div className="score">
                                             <BiPlus
                                                 id="edit-score"
-                                                onClick={e => handleReplyScoreChange(comment.content, reply.content, 'increment')}
+                                                onClick={e => handleReplyScoreChangeWrapper(comment.content, reply.content, 'increment')}
                                             />
                                             <span>
                                                 {reply.score}
                                             </span>
                                             <BiMinus
                                                 id="edit-score"
-                                                onClick={e => handleReplyScoreChange(comment.content, reply.content, 'decrement')}
+                                                onClick={e => handleReplyScoreChangeWrapper(comment.content, reply.content, 'decrement')}
                                             />
                                         </div>
                                         <div className="meta-details">
