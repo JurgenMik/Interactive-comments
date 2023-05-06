@@ -1,6 +1,7 @@
 import React from 'react';
 import './DeleteModal.scss';
 import {Comment} from "../../interfaces";
+import {handleDeleteUserInteraction} from "../../utils/interactionUtils";
 
 interface Props {
     setViewModal: (selected: object | null) => void,
@@ -15,30 +16,9 @@ function DeleteModal({setViewModal, selected, setComments, comments}: Props) {
         setViewModal(null);
     }
 
-    const handleDeleteUserInteraction = () => {
-        switch (selected?.interaction_type) {
-            case 'reply':
-                const updatedReplies = comments.map(comment => {
-                    if (comment.content === selected.targetComment) {
-                        const updatedReplies = comment.replies.filter((reply: any) =>
-                            reply.content !== selected.content
-                        );
-                        return {...comment, replies: updatedReplies};
-                    } else {
-                        return comment;
-                    }
-                });
+    const handleDeleteUserInteractionWrapper = () => {
+        handleDeleteUserInteraction(setComments, comments, selected);
 
-                setComments(updatedReplies);
-                break;
-            case 'comment':
-                const updatedComments = comments.filter((comment: Comment) =>
-                    comment.content !== selected.content
-                );
-
-                setComments(updatedComments);
-                break;
-        }
         setViewModal(null);
     }
 
@@ -59,7 +39,7 @@ function DeleteModal({setViewModal, selected, setComments, comments}: Props) {
                     </button>
                     <button
                         id="submit"
-                        onClick={handleDeleteUserInteraction}
+                        onClick={handleDeleteUserInteractionWrapper}
                     >
                         YES, DELETE
                     </button>

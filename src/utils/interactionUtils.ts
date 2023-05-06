@@ -1,3 +1,5 @@
+import {Comment} from "../interfaces";
+
 export const handleCommentScoreChange = (setComments: any, comments: any, targetComment: string, actionType: string) => {
     const updatedInteraction = comments.map((comment: any) => {
         if (comment.content === targetComment) {
@@ -40,4 +42,32 @@ export const handleCommentSubmit = (setComments: any, comments: any, comment: an
     setComments(updatedComments);
 
     return updatedComments;
+}
+
+export const handleDeleteUserInteraction = (setComments: any, comments: any, selected: {interaction_type: string, targetComment: string, content: string}) => {
+    switch (selected?.interaction_type) {
+        case 'reply':
+            const updatedReplies = comments.map((comment: any) => {
+                if (comment.content === selected.targetComment) {
+                    const updatedReplies = comment.replies.filter((reply: any) =>
+                        reply.content !== selected.content
+                    );
+                    return {...comment, replies: updatedReplies};
+                } else {
+                    return comment;
+                }
+            });
+
+            setComments(updatedReplies);
+
+            return updatedReplies;
+        case 'comment':
+            const updatedComments = comments.filter((comment: Comment) =>
+                comment.content !== selected.content
+            );
+
+            setComments(updatedComments);
+
+            return updatedComments;
+    }
 }
