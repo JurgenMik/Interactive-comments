@@ -1,7 +1,7 @@
 import {Comment} from "../interfaces";
 
 export const handleCommentScoreChange = (setComments: any, comments: any, targetComment: string, actionType: string) => {
-    const updatedInteraction = comments.map((comment: any) => {
+    const updatedInteraction = comments.map((comment: Comment) => {
         if (comment.content === targetComment) {
             return {...comment,
                 score: actionType === 'increment' ? ++comment.score : --comment.score
@@ -17,7 +17,7 @@ export const handleCommentScoreChange = (setComments: any, comments: any, target
 }
 
 export const handleReplyScoreChange = (setComments: any, comments: any, targetComment: string, targetReply: string, actionType: string) => {
-    const updatedInteraction = comments.map((comment: any) => {
+    const updatedInteraction = comments.map((comment: Comment) => {
         if (comment.content === targetComment) {
             const updatedReplies = comment?.replies.map((reply: any) => {
                 if (reply.content === targetReply) {
@@ -49,7 +49,7 @@ export const handleCommentSubmit = (setComments: any, comments: any, comment: an
 export const handleDeleteUserInteraction = (setComments: any, comments: any, selected: {interaction_type: string, targetComment: string, content: string}) => {
     switch (selected?.interaction_type) {
         case 'reply':
-            const updatedReplies = comments.map((comment: any) => {
+            const updatedReplies = comments.map((comment: Comment) => {
                 if (comment.content === selected.targetComment) {
                     const updatedReplies = comment.replies.filter((reply: any) =>
                         reply.content !== selected.content
@@ -75,7 +75,7 @@ export const handleDeleteUserInteraction = (setComments: any, comments: any, sel
 }
 
 export const handleReplySubmit = (setComments: any, comments: any, replyTo: any, reply: any) => {
-    const updatedComment = comments.map((comment: any) => {
+    const updatedComment = comments.map((comment: Comment) => {
         if (comment.content === replyTo.targetComment) {
             return {...comment,
                 replies: [...comment.replies, reply]
@@ -88,4 +88,42 @@ export const handleReplySubmit = (setComments: any, comments: any, replyTo: any,
     setComments(updatedComment);
 
     return updatedComment;
+}
+
+export const handleInteractionEditSubmit = (setComments: any, comments: any, isEditing: any, edited: string) => {
+    switch (isEditing.identifier) {
+        case 'reply': {
+            const updatedComments = comments.map((comment: Comment) => {
+                if (comment.content === isEditing.repliedTo_content) {
+                    const updatedReplies = comment.replies.map((reply: any) => {
+                        if (reply.content === isEditing.target) {
+                            return {...reply, content: edited}
+                        } else {
+                            return reply;
+                        }
+                    });
+                    return {...comment, replies: updatedReplies}
+                } else {
+                    return comment;
+                }
+            });
+
+            setComments(updatedComments);
+
+            return updatedComments;
+        }
+        case 'comment': {
+            const updatedComments = comments.map((comment: Comment) => {
+                if (comment.content === isEditing.target) {
+                    return {...comment, content: edited}
+                } else {
+                    return comment;
+                }
+            });
+
+            setComments(updatedComments);
+
+            return updatedComments;
+        }
+    }
 }

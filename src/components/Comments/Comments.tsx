@@ -5,7 +5,11 @@ import {Comment} from "../../interfaces";
 import {BiPlus, BiMinus} from 'react-icons/bi';
 import {FaReply, FaTrash} from 'react-icons/fa';
 import {MdEdit} from 'react-icons/md';
-import {handleCommentScoreChange, handleReplyScoreChange} from "../../utils/interactionUtils";
+import {
+    handleCommentScoreChange,
+    handleInteractionEditSubmit,
+    handleReplyScoreChange
+} from "../../utils/interactionUtils";
 
 interface Props {
     profile: {image: object, username: string},
@@ -61,38 +65,9 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
         setEditedContent(e.target.value);
     }
 
-    const handleInteractionEditSubmit = () => {
-        switch (isEditing.identifier) {
-            case 'reply': {
-                const updatedComments = comments.map(comment => {
-                    if (comment.content === isEditing.repliedTo_content) {
-                        const updatedReplies = comment.replies.map((reply: any) => {
-                            if (reply.content === isEditing.target) {
-                                return {...reply, content: edited}
-                            } else {
-                                return reply;
-                            }
-                        });
-                        return {...comment, replies: updatedReplies}
-                    } else {
-                        return comment;
-                    }
-                });
-                setComments(updatedComments);
-                break;
-            }
-            case 'comment': {
-                const updatedComments = comments.map(comment => {
-                    if (comment.content === isEditing.target) {
-                        return {...comment, content: edited}
-                    } else {
-                        return comment;
-                    }
-                });
-                setComments(updatedComments);
-                break;
-            }
-        }
+    const handleInteractionEditSubmitWrapper = () => {
+        handleInteractionEditSubmit(setComments, comments, isEditing, edited);
+
         setIsEditing({...isEditing, selected: false, target: ""});
     }
 
@@ -165,7 +140,7 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                                 value={edited}
                                                 onChange={handleInteractionEditChange}
                                             />
-                                            <button onClick={handleInteractionEditSubmit}>
+                                            <button onClick={handleInteractionEditSubmitWrapper}>
                                                 UPDATE
                                             </button>
                                         </div>
@@ -252,7 +227,7 @@ function Comments({profile, comments, setComments, handleSelectedComment}: Props
                                                             value={edited}
                                                             onChange={handleInteractionEditChange}
                                                         />
-                                                        <button onClick={handleInteractionEditSubmit}>
+                                                        <button onClick={handleInteractionEditSubmitWrapper}>
                                                             UPDATE
                                                         </button>
                                                     </div>
