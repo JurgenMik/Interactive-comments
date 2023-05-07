@@ -7,16 +7,16 @@ Interactive comments section [Frontend Mentor Challenge](https://www.frontendmen
 ### App. Functionalities
 * See <strong>hover</strong> states for all interactive elements
 * Create, Read, Update and Delete <strong>comments</strong> & <strong>replies</strong>
-    * See a delete modal popup before confirmation
+    * See a delete <strong>modal</strong> popup before confirmation
 * Upvote & downvote comments
 ### Screenshots
-![image](https://user-images.githubusercontent.com/89903354/236693894-13d0a408-6eae-48b5-ad42-26a2c395defa.png)
-![image](https://user-images.githubusercontent.com/89903354/236693975-ff515651-775a-468b-b45b-4f3c2c9b90ae.png)
-![image](https://user-images.githubusercontent.com/89903354/236694015-4c836cf7-7802-4ef7-a275-17308fa55ab9.png)
-![image](https://user-images.githubusercontent.com/89903354/236694097-85608812-5204-4d32-8a94-5f330fda12e1.png)
-![image](https://user-images.githubusercontent.com/89903354/236694372-29a36752-576b-4844-a66e-96aba7f8b517.png)
-![image](https://user-images.githubusercontent.com/89903354/236694257-8e95a4ef-e1e1-4627-bd13-378a42f8c822.png)
+![image](https://user-images.githubusercontent.com/89903354/236697750-8a35245c-bf3c-438d-a21d-c120ae504fa6.png)
+![image](https://user-images.githubusercontent.com/89903354/236697774-99fe6062-f8c6-4c78-8d9f-11ebd9820fbd.png)
+![image](https://user-images.githubusercontent.com/89903354/236697819-1985bc8a-cc75-456a-b312-4f8979fe1108.png)
+![image](https://user-images.githubusercontent.com/89903354/236697892-5c85a99d-278a-4624-b559-f0b8ab228bf5.png)
+![image](https://user-images.githubusercontent.com/89903354/236697954-6c138fe5-049f-4300-8d00-6865aa2103aa.png)
 ### Built With
 * <strong>React</strong>
 * <strong>TypeScript</strong>
 * <strong>SASS</strong>
+* <strong>Jest</strong>
