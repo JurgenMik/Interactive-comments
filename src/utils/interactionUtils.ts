@@ -10,6 +10,7 @@ export const handleCommentScoreChange = (setComments: any, comments: any, target
             return comment;
         }
     });
+
     setComments(updatedInteraction);
 
     return updatedInteraction;
@@ -32,6 +33,7 @@ export const handleReplyScoreChange = (setComments: any, comments: any, targetCo
             return comment;
         }
     });
+
     setComments(updatedInteraction);
 
     return updatedInteraction;
@@ -82,6 +84,7 @@ export const handleReplySubmit = (setComments: any, comments: any, replyTo: any,
             return comment;
         }
     });
+
     setComments(updatedComment);
 
     return updatedComment;
