@@ -6,6 +6,11 @@
   height: 12.5rem;
   top: 30%;
   left: 35%;
+  @media (max-width: $small-screen) {
+    width: 20rem;
+    left: 8.5%;
+  }
+  z-index: 10;
   background: white;
   box-shadow: 0 0 0 1000px $TranslucentGray;
   border-radius: 0.5rem;

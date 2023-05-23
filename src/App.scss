@@ -1,5 +1,10 @@
+@import './variables/variables';
+
 .main-layout-container {
   width: 55%;
+  @media (max-width: $small-screen) {
+    width: 100%;
+  }
   height: 100vh;
   margin-left: auto;
   margin-right: auto;
