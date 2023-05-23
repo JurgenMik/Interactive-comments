@@ -36,11 +36,14 @@ function UserReply({profile, replyTo, comments, setComments, setReplyTo}: Props)
         setReplyTo({...replyTo, replyingTo: ""});
     }
 
+    const replyModalStyle = {
+        marginLeft: replyTo.identifier === 'reply' && window.innerWidth > 395 ? '10rem' : '3rem',
+        marginTop: '1.25rem',
+        marginBottom: replyTo.identifier && window.innerWidth <= 395 ? '4.5rem' : ''
+    }
+
     return (
-        <div className="main-comment-container" style={{
-                marginLeft: replyTo.identifier === 'reply' ? '10rem' : '',
-                marginTop: '1.25rem'
-            }}
+        <div className="main-comment-container" style={replyModalStyle}
         >
             <div className="avatar-container">
                 <img
