@@ -12,6 +12,11 @@
 
 .sub-comments-container {
   width: 75%;
+  @media (max-width: $small-screen) {
+    width: 90%;
+    margin-top: 0.5rem;
+    position: relative;
+  }
   margin-left: auto;
   margin-right: auto;
   margin-top: 2rem;
@@ -19,6 +24,9 @@
 
 .comment-details-container {
   display: flex;
+  @media (max-width: $small-screen) {
+    flex-direction: column;
+  }
 }
 
 .main-reply-container {
@@ -29,6 +37,13 @@
 .sub-reply-container {
   width: 85%;
   display: flex;
+  @media (max-width: $small-screen) {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    position: relative;
+  }
   margin-left: auto;
   margin-top: 3rem;
 }
@@ -49,12 +64,20 @@
     }
   }
   flex-direction: column;
+  @media (max-width: $small-screen) {
+    width: 20%;
+    flex-direction: row;
+    height: 3.5rem;
+  }
   align-items: center;
   justify-content: space-evenly;
   span {
     color: $ModerateBlue;
     font-weight: bold;
     font-size: 1rem;
+    @media (max-width: $small-screen) {
+      margin: 0.25rem;
+    }
   }
 }
 
@@ -101,6 +124,11 @@
         display: flex;
         gap: 0.5rem;
         align-items: center;
+        @media (max-width: $small-screen) {
+          position: absolute;
+          top: 3%;
+          left: 55%;
+        }
         &:hover {
           cursor: pointer;
           color: $LightGrayishBlue;
@@ -111,6 +139,11 @@
         gap: 0.5rem;
         align-items: center;
         color: $SoftRed;
+        @media (max-width: $small-screen) {
+          position: absolute;
+          top: 3%;
+          left: 75%;
+        }
         &:hover {
           cursor: pointer;
           color: $PaleRed;
