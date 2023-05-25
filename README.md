@@ -15,6 +15,7 @@ Interactive comments section [Frontend Mentor Challenge](https://www.frontendmen
 ![image](https://user-images.githubusercontent.com/89903354/236697819-1985bc8a-cc75-456a-b312-4f8979fe1108.png)
 ![image](https://user-images.githubusercontent.com/89903354/236697892-5c85a99d-278a-4624-b559-f0b8ab228bf5.png)
 ![image](https://user-images.githubusercontent.com/89903354/236697954-6c138fe5-049f-4300-8d00-6865aa2103aa.png)
+![image](https://github.com/JurgenMik/Interactive-comments/assets/89903354/e0ee7d0e-ccb7-48c5-85a6-3366b3c631e0)
 ### Built With
 * <strong>React</strong>
 * <strong>TypeScript</strong>
